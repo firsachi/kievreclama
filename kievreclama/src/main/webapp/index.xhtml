@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html" 
+	xmlns:f="http://xmlns.jcp.org/jsf/core" 
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<h:head>
+		<meta charset="UTF-8"></meta>
+		<title>Insert title here</title>
+  		<h:outputStylesheet library="css" name="foundation.css" />
+		<h:outputStylesheet library="css" name="app.css"/>
+		<h:outputScript library="js" name="vendor/jquery.js" />
+		<h:outputScript library="js" name="vendor/what-input.js" />
+		<h:outputScript library="js" name="vendor/foundation.js" />
+	</h:head>
+
+	<h:body>
+			<table class="table-expand">
+				<thead>
+					<tr class="table-expand-row">
+						<td><h:outputText value="#{msg['columns.number']}"/></td>
+						<td><h:outputText value="#{msg['columns.name']}"/></td>
+						<td><h:outputText value="#{msg['columns.customer']}"/></td>
+						<td><h:outputText value="#{msg['columns.board']}"/></td>
+						<td><h:outputText value="#{msg['columns.layposter']}"/></td>
+						<td><h:outputText value="#{msg['columns.metrolight']}"/></td>
+						<td><h:outputText value="#{msg['columns.startDate']}"/></td>
+						<td><h:outputText value="#{msg['columns.endDate']}"/></td>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach items="#{managesPlots.plots}" var="plot">
+  					<tr class="table-expand-row" data-open-details="">
+    					<td><h:outputText value="#{plot.numberDoruchennya}"/></td>
+						<td> <span class="expand-icon"></span><h:outputText value="#{plot.nameDoruchennya}"/></td>
+						<td><h:outputText value="#{plot.customer}"/></td>
+						<td><h:outputText value="#{plot.area.board}"/></td>
+						<td><h:outputText value="#{plot.area.layposter}"/></td>
+						<td><h:outputText value="#{plot.area.metrolight}"/></td>
+						<td>
+							<h:outputText value="#{plot.startDate}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+							</h:outputText>
+						</td>
+						<td>
+							<h:outputText value="#{plot.endDate}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+							</h:outputText>
+						</td>
+  					</tr>
+  					<tr class="table-expand-row-content">
+  						<td colspan="8" class="table-expand-row-nested">
+        					<h:dataTable styleClass="table-exp">
+        						<h:column>
+        							<f:facet name="header">
+        								<h:outputText value="#{msg['columns.number']}"/>
+        							</f:facet>
+        						</h:column>
+        						<h:column>
+        							<f:facet name="header">
+        								<h:outputText value="#{msg['columns.name']}"/>
+        							</f:facet>
+        						</h:column>
+        						<h:column>
+        							<f:facet name="header">
+        								<h:outputText value="#{msg['columns.board']}"/>
+        							</f:facet>
+        						</h:column>
+        						<h:column>
+        							<f:facet name="header">
+        								<h:outputText value="#{msg['columns.layposter']}"/>
+        							</f:facet>
+        						</h:column>
+        						<h:column>
+        							<f:facet name="header">
+        								<h:outputText value="#{msg['columns.metrolight']}"/>
+        							</f:facet>
+        						</h:column>
+        					</h:dataTable>
+      					</td>
+  					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			
+	<script type="">
+			$(document).foundation();
+			$('[data-open-details]').click(function (e) {
+  e.preventDefault();
+  $(this).next().toggleClass('is-active');
+  $(this).toggleClass('is-active');
+});
+	</script>
+	</h:body>
+</html>
