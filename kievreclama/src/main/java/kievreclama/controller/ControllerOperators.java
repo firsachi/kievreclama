@@ -1,7 +1,7 @@
 /**
  * 
  */
-package kievreclama.manages;
+package kievreclama.controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,8 +11,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
-import kievreclama.models.ModelOpertor;
+import kievreclama.models.ModelOperator;
 import kievreclama.services.ServiceOperator;
 
 /**
@@ -21,18 +22,16 @@ import kievreclama.services.ServiceOperator;
  */
 @Named
 @SessionScoped
-public class ManagesOperators implements Serializable{
+public class ControllerOperators implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1893558502338272465L;
 	
-	private List<ModelOpertor> operators;
+	private List<ModelOperator> operators;
 	
-	private ModelOpertor createOperator;
-	
-	private ModelOpertor selectedOperator;
+	private ModelOperator operator;
 	
 	private Integer index;
 	
@@ -42,54 +41,56 @@ public class ManagesOperators implements Serializable{
 	@PostConstruct
 	private void init() {
 		operators = service.all();
-		createOperator = new ModelOpertor();
+		operator = new ModelOperator();
 	}
 	
 	public String updateOprators() {
-		operators.set(index, service.update(selectedOperator));
-		selectedOperator = new ModelOpertor();
+		operators.set(index, service.update(operator));
 		return cansel();
 	}
 	
 	public void actionSelectedOperator(ActionEvent event) {
 		String id = (String) event.getComponent().getAttributes().get("opertorId");
-		selectedOperator = service.fing(new Integer(id));
-		index = operators.indexOf(selectedOperator);
+		operator = service.fing(new Integer(id));
+		index = operators.indexOf(operator);
 	}
 	
+	public void actionAddOperator(ActionEvent event) {
+		operator = new ModelOperator();
+	}
+	
+	@Transactional
 	public String addOperator() {
-		createOperator.setId("0");
-		createOperator = service.add(createOperator);
-		operators.add(createOperator);
-		createOperator = new ModelOpertor();
+		operator.setId("0");
+		operator = service.add(operator);
+		operators.add(operator);
 		return cansel();
 	}
 	
+	public String counter(ModelOperator operator) {
+		int result = operators.indexOf(operator) + 1;
+		return Integer.toString(result);
+	}
+	
 	public String cansel() {
+		operator = new ModelOperator();
 		return "operators?faces-redirect=true";
 	}
 
-	public List<ModelOpertor> getOperators() {
+	public List<ModelOperator> getOperators() {
 		return operators;
 	}
 
-	public void setOperators(List<ModelOpertor> operators) {
+	public void setOperators(List<ModelOperator> operators) {
 		this.operators = operators;
 	}
 
-	public ModelOpertor getCreateOperator() {
-		return createOperator;
+	public ModelOperator getOperator() {
+		return operator;
 	}
 
-	public void setCreateOperator(ModelOpertor createOperator) {
-		this.createOperator = createOperator;
+	public void setOperator(ModelOperator operator) {
+		this.operator = operator;
 	}
 
-	public ModelOpertor getSelectedOperator() {
-		return selectedOperator;
-	}
-
-	public void setSelectedOperator(ModelOpertor selectedOperator) {
-		this.selectedOperator = selectedOperator;
-	}
 }
