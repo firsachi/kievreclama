@@ -16,13 +16,13 @@
 		<ui:define name="content">
 		
 			<div class="row expanded">
-				<div class="columns large-8">
+				<div class="columns">
 					<h:form>
-						<h:dataTable value="#{managesOperators.operators}" var="operator">
+						<h:dataTable value="#{controllerOperators.operators}" var="operator">
 						
 							<h:column>
 								<f:facet name="header"><h:outputText value="#{msg['columns.number']}"/></f:facet>
-								<h:outputText value="#{managesOperators.operators.indexOf(operator) +1}" />
+								<h:outputText value="#{controllerOperators.counter(operator)}" />
 							</h:column>
 				
 							<h:column>
@@ -31,65 +31,48 @@
 							</h:column>
 							
 							<h:column>
-								<h:commandLink id="buttonEdit" value="Редагувати" actionListener="#{managesOperators.actionSelectedOperator}">
+								<f:facet name="header">
+								<ul class="menu">
+									<li>
+										<h:commandLink value="#{msg['button.add']}" styleClass="button" actionListener="#{controllerOperators.actionAddOperator}">
+											<f:ajax execute="formAdd" render="@form :formAdd"/>
+											<f:passThroughAttribute name="data-open" value="addOperator"/>
+										</h:commandLink>
+									</li>
+									</ul>
+								</f:facet>
+								<h:commandLink id="buttonEdit" value="#{msg['button.edit']}" actionListener="#{controllerOperators.actionSelectedOperator}">
 									<f:attribute name="opertorId" value="#{operator.id}"/>
 									<f:ajax execute="formEdit" render="@form :formEdit"/>
-									<f:passThroughAttribute name="data-open" value="editCompany"/>
+									<f:passThroughAttribute name="data-open" value="editOperator"/>
 								</h:commandLink>
 							</h:column>
 						</h:dataTable>
 					</h:form>
 					
+					<!-- modal form - add new operator-->
+					<div id="addOperator" class="reveal" data-reveal="" data-options="closeOnClick:false; closeOnEsc:false;">
+						<ui:include src="/WEB-INF/parts/form-add-operator.xhtml"></ui:include>
+					</div>
+					
 					<!-- modal form - edit-->
-  				<div id="editCompany" class="reveal" data-reveal="" data-options="closeOnClick:false; closeOnEsc:false;">
-  					<h:form id="formEdit">
-  						<h2><h:outputText value="#{msg['operator.edit']}"/></h2>
-  						
-  						<div class="column">
-							<h:inputHidden id="editCompanyId" value="#{managesOperators.selectedOperator.id}" binding="#{editCompany}"/>
-						</div>
+  					<div id="editOperator" class="reveal" data-reveal="" data-options="closeOnClick:false; closeOnEsc:false;">
+  						<h:form id="formEdit">
+  							<h2><h:outputText value="#{msg['operator.edit']}"/></h2>
 				
-						<div class="column">
-							<h:outputLabel value="#{msg['columns.name']}" for="editOperator" styleClass="box-form">  					
-  								<h:inputText id="editOperator" value="#{managesOperators.selectedOperator.nameOperator}">
-  									<f:attribute name="chekId"  value="#{editCompanyId}"/>
-  								</h:inputText>
-  								<h:message id="errorNewComapnyName" for="editComapnyName" styleClass="error-text"/>
-  							</h:outputLabel>					
-  						</div>
+							<ui:include src="/WEB-INF/parts/template-form-oprator.xhtml"></ui:include>
   						
-  						
-  						<hr></hr>
-  						<div class="row expanded align-right">
-  							<div class="button-group">
-  								<h:button value="#{msg['button.exit']}" styleClass="button" includeViewParams="true"/>
-  								<h:commandButton value="#{msg['button.submit']}"  styleClass="button" action="#{managesOperators.updateOprators}">
-  									<f:ajax execute="@form" render="@form" />
-  								</h:commandButton>
+  							<hr></hr>
+  							<div class="row expanded align-right">
+  								<div class="button-group">
+  									<h:button value="#{msg['button.exit']}" styleClass="button" includeViewParams="true"/>
+  									<h:commandButton value="#{msg['button.submit']}"  styleClass="button" action="#{controllerOperators.updateOprators}">
+  										<f:ajax execute="@form" render="@form" />
+  									</h:commandButton>
+  								</div>
   							</div>
-  						</div>
-  					</h:form>
-  				</div>
-				</div>
-				<div class="columns large-4">
-					<h:form id="newCompny">
-						
-						<div class="column">
-							<h3><h:outputText value="#{msg['operator.new']}"/></h3>
-						</div>
-						
-						<div class="column">
-							<h:outputLabel for="newOperator" value="#{msg['columns.name']}">
-								<h:inputText id="newOperator" value="#{managesOperators.createOperator.nameOperator}"></h:inputText>
-								<h:message for="newOperator" styleClass="error-text"/>
-							</h:outputLabel>
-						</div>
-						
-						<div class="column">
-							<h:commandButton value="#{msg['button.submit']}" styleClass="button expanded"  action="#{managesOperators.addOperator}"/>
-						</div>
-						
-					</h:form>
+  						</h:form>
+  					</div>
 				</div>
 			</div>
 		</ui:define>
