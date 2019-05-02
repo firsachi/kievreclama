@@ -7,7 +7,7 @@ package kievreclama.models;
  * @author firsov
  *
  */
-public class ModelOpertor{
+public class ModelOperator{
 
 	private String id;
 	
@@ -46,7 +46,7 @@ public class ModelOpertor{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ModelOpertor other = (ModelOpertor) obj;
+		ModelOperator other = (ModelOperator) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

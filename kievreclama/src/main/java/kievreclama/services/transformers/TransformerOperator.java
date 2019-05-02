@@ -6,20 +6,20 @@ package kievreclama.services.transformers;
 import javax.ejb.Stateless;
 
 import kievreclama.entities.AdvertisingOperator;
-import kievreclama.models.ModelOpertor;
+import kievreclama.models.ModelOperator;
 
 /**
  * @author firsov
  *
  */
 @Stateless
-public class TransformerOperator implements BaseTransformer<AdvertisingOperator, ModelOpertor>{
+public class TransformerOperator implements BaseTransformer<AdvertisingOperator, ModelOperator>{
 	
 	private AdvertisingOperator entity;
-	private ModelOpertor model;
+	private ModelOperator model;
 
 	@Override
-	public AdvertisingOperator modelEntity(ModelOpertor model) {
+	public AdvertisingOperator modelEntity(ModelOperator model) {
 		entity = new AdvertisingOperator();
 		entity.setId(new Integer(model.getId()));
 		entity.setAdvertisingOperatorName(model.getNameOperator());
@@ -27,8 +27,8 @@ public class TransformerOperator implements BaseTransformer<AdvertisingOperator,
 	}
 
 	@Override
-	public ModelOpertor entityModel(AdvertisingOperator entity) {
-		model = new ModelOpertor();
+	public ModelOperator entityModel(AdvertisingOperator entity) {
+		model = new ModelOperator();
 		model.setId(Integer.toString(entity.getId()));
 		model.setNameOperator(entity.getAdvertisingOperatorName());
 		return model;

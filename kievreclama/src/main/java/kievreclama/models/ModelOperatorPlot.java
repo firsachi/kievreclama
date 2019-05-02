@@ -10,15 +10,15 @@ package kievreclama.models;
  */
 public class ModelOperatorPlot{
 
-	private ModelOpertor operator;
+	private ModelOperator operator;
 	
 	private ModelArea area;
 
-	public ModelOpertor getOperator() {
+	public ModelOperator getOperator() {
 		return operator;
 	}
 
-	public void setOperator(ModelOpertor operator) {
+	public void setOperator(ModelOperator operator) {
 		this.operator = operator;
 	}
 

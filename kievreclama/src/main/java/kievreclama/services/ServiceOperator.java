@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
 
 import kievreclama.entities.AdvertisingOperator;
-import kievreclama.models.ModelOpertor;
+import kievreclama.models.ModelOperator;
 import kievreclama.repository.RepositoryOperator;
 import kievreclama.services.transformers.BaseTransformer;
 
@@ -19,30 +19,31 @@ import kievreclama.services.transformers.BaseTransformer;
  * @author firsov
  *
  */
-@ApplicationScoped
+@Stateless
 public class ServiceOperator {
 
 	@EJB
 	private RepositoryOperator repository;
 	
 	@EJB(beanName = "TransformerOperator")
-	private BaseTransformer<AdvertisingOperator, ModelOpertor> transformer;
+	private BaseTransformer<AdvertisingOperator, ModelOperator> transformer;
 	
-	public List<ModelOpertor> all(){
-		List<ModelOpertor> operators = new ArrayList<ModelOpertor>();
+	public List<ModelOperator> all(){
+		List<ModelOperator> operators = new ArrayList<ModelOperator>();
 		operators = repository.all().stream().map(operator -> transformer.entityModel(operator)).collect(Collectors.toList());
 		return operators;
 	}
 
-	public ModelOpertor add(ModelOpertor operator) {
+	public ModelOperator add(ModelOperator operator) {
 		return transformer.entityModel(repository.add(transformer.modelEntity(operator)));
 	}
 
-	public ModelOpertor fing(int id) {
+	public ModelOperator fing(int id) {
 		return transformer.entityModel(repository.find(id));
 	}
 
-	public ModelOpertor update(ModelOpertor model) {
+	public ModelOperator update(ModelOperator model) {
 		return transformer.entityModel(repository.update(transformer.modelEntity(model)));
 	}
+
 }
