@@ -29,4 +29,11 @@ public class RepositoryOperator extends BaseRepository<AdvertisingOperator>{
 		String query = "FROM AdvertisingOperator operator ORDER BY operator.id";
 		return getEntityManager().createQuery(query, AdvertisingOperator.class).getResultList();
 	}
+
+	public List<AdvertisingOperator> findName(String nameOperator) {
+		String query = "FROM AdvertisingOperator operator WHERE operator.advertisingOperatorName in :nameOperator";
+		return getEntityManager().createQuery(query, AdvertisingOperator.class)
+				.setParameter("nameOperator", nameOperator).getResultList();
+		
+	}
 }
