@@ -67,4 +67,16 @@
     opacity: 1;
   }
 }
+//error
+.box-form {
+	margin-bottom: 1rem;
+}
+
+.box-form input {
+	margin-bottom: 0;
+}
+
+.error-text {
+	color: red;
+}
 
